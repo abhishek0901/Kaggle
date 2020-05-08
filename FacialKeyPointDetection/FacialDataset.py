@@ -18,7 +18,7 @@ class FacialDataset(Dataset):
         x = torch.from_numpy(gray2rgb(resize(util.convert_to_matrix(self.X[index]), (299, 299)))).type(
             torch.FloatTensor).permute(2, 0, 1) / 255
         x = x.to(device=util.device).to(torch.float32)
-        y = torch.from_numpy(self.Y[index]).to(device=util.device) / 96
+        y = torch.from_numpy(self.Y[index]).to(device=util.device)
         y = y.to(torch.float32)
         return x, y
 

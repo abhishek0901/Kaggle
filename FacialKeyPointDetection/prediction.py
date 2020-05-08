@@ -11,7 +11,7 @@ dataset=FD.FacialDataset("./data/training.zip")
 model.eval()
 for row in range(util.RANGE):
     x = dataset.X[row]
-    y_o = dataset.Y[row] / 96
+    y_o = dataset.Y[row]
     x = torch.from_numpy(gray2rgb(resize(util.convert_to_matrix(x), (299, 299)))).type(torch.FloatTensor).permute(2,0,1).unsqueeze(0) / 255
     x = x.to(device=util.device).to(torch.float32)
     y_pred = model(x)

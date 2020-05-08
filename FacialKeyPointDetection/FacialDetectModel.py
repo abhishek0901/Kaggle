@@ -22,5 +22,5 @@ class FacialDetectModel(nn.Module):
             out,_ = self.facial_model(x)
         else:
             out = self.facial_model(x)
-        out = torch.sigmoid(self.head_1(out))
+        out = torch.relu(self.head_1(out))
         return out
