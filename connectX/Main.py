@@ -11,9 +11,9 @@ import util as util
 env = cnx.ConnectX()
 state_size = env.observation_space.shape[1]*env.observation_space.shape[0]
 action_size = env.observation_space.shape[1]
-episodes = 1000
+episodes = 4000
 agent = dqna.DQNAgent(state_size, action_size, episodes).to(util.device)
-#agent.load('trained_model.dt')
+agent.load('trained_model.dt')
 batch_size = 256
 criterion = torch.nn.MSELoss()
 optimizer = optim.Adam(agent.parameters(),lr=0.003)
