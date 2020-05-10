@@ -34,10 +34,11 @@ class DQNAgent(nn.Module):
         self.head = nn.Linear(2*self.action_size,self.action_size)
 
     def forward(self,input):
-        input = F.relu(self.bn1(self.fc1(input)))
-        input = F.relu(self.bn2(self.fc2(input)))
-        input = F.relu(self.linear_activation(self.bn3(self.fc3(input))))
-        input = F.relu(self.head(input.view(-1,2 * self.action_size)))
+        input = input.to(self.device)
+        input = F.relu(self.bn1(self.fc1(input))).to(self.device)
+        input = F.relu(self.bn2(self.fc2(input))).to(self.device)
+        input = F.relu(self.linear_activation(self.bn3(self.fc3(input)))).to(self.device)
+        input = F.relu(self.head(input.view(-1, 2 * self.action_size))).to(self.device)
         return input
 
     def memorize(self,*args):
@@ -54,7 +55,7 @@ class DQNAgent(nn.Module):
         self.train()
 
         #action = np.argmax(action_value[0]) not working in parallel model
-        action = action_value.max(0)[1].item()
+        action = action_value[0].max(0)[1].item()
         return action
 
     def replay(self,batch_size,criterion,optimizer):
