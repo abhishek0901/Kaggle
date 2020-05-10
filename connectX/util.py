@@ -3,7 +3,7 @@ import torch
 import numpy as np
 
 Transition = namedtuple('Transition',('state','action','reward','next_state','done'))
-device  = 'cuda' if torch.cuda.is_available() else 'cpu'
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def process_board(board):
     board_1 = board
