@@ -1,9 +1,10 @@
 import gym
 import numpy as np
+from kaggle_environments import evaluate, make
 
 class ConnectX(gym.Env):
     def __init__(self):
-        self.env = gym.make('connectx',debug=True)
+        self.env = make('connectx',debug=False)
         self.trainer = self.env.train([None, "negamax"])
         config = self.env.configuration
         self.action_space = gym.spaces.Discrete(config.columns)
