@@ -53,7 +53,8 @@ class DQNAgent(nn.Module):
         action_value = self(state_tensor).detach()
         self.train()
 
-        action = np.argmax(action_value[0])
+        #action = np.argmax(action_value[0]) not working in parallel model
+        action = action_value.max(0)[1].item()
         return action
 
     def replay(self,batch_size,criterion,optimizer):
