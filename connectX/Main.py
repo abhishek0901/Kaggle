@@ -7,13 +7,14 @@ from collections import deque
 import pandas as pd
 import matplotlib.pyplot as plt
 import util as util
+import random as random
 
 env = cnx.ConnectX()
 state_size = env.observation_space.shape[1]*env.observation_space.shape[0]
 action_size = env.observation_space.shape[1]
 episodes = 10000
 agent = dqna.DQNAgent(state_size, action_size, episodes).to(util.device)
-agent.load('trained_model.dt')
+#agent.load('trained_model.dt')
 batch_size = 256
 criterion = torch.nn.MSELoss()
 optimizer = optim.Adam(agent.parameters(),lr=0.003)
@@ -25,7 +26,15 @@ for episode in range(episodes):
     state = env.reset()
     total_reward = 0
     while not done:
+
         action = int(agent.act(state.board))
+        opportunity,threats = util.get_threats_and_column_list(np.array(state.board))
+
+        if len(opportunity) != 0 and action not in opportunity:
+            action = random.choice(opportunity)
+        elif len(threats) != 0 and action not in threats:
+            action = random.choice(threats)
+
         print("My action : {}".format(action))
         next_state,reward,done,_ = env.step(action)
         if not done:
