@@ -58,7 +58,7 @@ combi['tidy_tweet'] = tokenized_tweet
 
 all_words = ' '.join([text for text in combi['tidy_tweet']])
 from wordcloud import WordCloud
-'''
+
 word_cloud = WordCloud(width=800,height=500,random_state=21,max_font_size=110).generate(all_words)
 
 plt.figure(figsize=(10,7))
@@ -79,7 +79,7 @@ plt.figure(figsize=(10,7))
 plt.imshow(word_cloud,interpolation='bilinear')
 plt.axis('off')
 plt.show()
-'''
+
 
 def hashtag_extract(x):
     hashtags = []
@@ -100,17 +100,7 @@ HT_negative = sum(HT_negative,[])
 a = nltk.FreqDist(HT_regular)
 d = pd.DataFrame({'Hashtag': list(a.keys()),
                   'Count': list(a.values())})
-d = d.nlargest(columns="Count", n = 10000)
-for x in range(len(d)):
-    combi['tidy_tweet'] = combi['tidy_tweet'].str.replace(d.iloc[x]['Hashtag'], "Swati")
-
-normal_words = ' '.join([text for text in combi['tidy_tweet'][combi['label'] == 0]])
-word_cloud = WordCloud(width=800,height=500,random_state=21,max_font_size=110).generate(normal_words)
-plt.figure(figsize=(10,7))
-plt.imshow(word_cloud,interpolation='bilinear')
-plt.axis('off')
-plt.show()
-'''
+d = d.nlargest(columns="Count", n = 10)
 plt.figure(figsize=(16,5))
 ax = sns.barplot(data=d, x= "Hashtag", y = "Count")
 ax.set(ylabel = 'Count')
@@ -125,5 +115,5 @@ plt.figure(figsize=(16,5))
 ax = sns.barplot(data=e, x= "Hashtag", y = "Count")
 ax.set(ylabel = 'Count')
 plt.show()
-'''
+
 #************************* STORY GEBERATION AND VISUALISATION ***************************
